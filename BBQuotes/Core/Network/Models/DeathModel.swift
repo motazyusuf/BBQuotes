@@ -13,12 +13,18 @@ struct DeathModel: Decodable {
     let details: String?
     let lastWords: String?
     
+    enum CodingKeys: CodingKey {
+        case character
+        case image
+        case details
+        case lastWords
+    }
     
     init(from decoder: Decoder) throws {
-        let json = try decoder.container(keyedBy: DynamicCodingKey.self)
-        character = json.safeStringDecode(forKey: "character")
-        image = json.safeURLDecode(forKey: "image")
-        details = json.safeStringDecode(forKey: "details")
-        lastWords = json.safeStringDecode(forKey: "last_words")
+        let json = try decoder.container(keyedBy: CodingKeys.self)
+        character = json.safeStringDecode(forKey: .character)
+        image = json.safeURLDecode(forKey: .image)
+        details = json.safeStringDecode(forKey: .details)
+        lastWords = json.safeStringDecode(forKey: .lastWords)
     }
 }

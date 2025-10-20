@@ -10,42 +10,41 @@ import Foundation
 struct BBRepo {
     
     
-    func getRandomQuote(from show: String) async throws -> QuoteModel {
+    func getRandomQuote(from show: String) async throws -> (QuoteModel,HTTPURLResponse) {
         
-        let quote = try await NetworkHelper.request(
+        let response = try await NetworkHelper.request(
             url: Api.quotes,
             method: .get,
             queryParams: [URLQueryItem(name: "production", value: show)],
             responseType: QuoteModel.self,
         )
         
-        return quote
+        return response
 
     }
     
-    func getCharacter(_ name: String) async throws -> [CharacterModel] {
+    func getCharacter(_ name: String) async throws -> ([CharacterModel],HTTPURLResponse) {
         
-        let characters = try await NetworkHelper.request(
+        let response = try await NetworkHelper.request(
             url: Api.characters,
             method: .get,
             queryParams: [URLQueryItem(name: "name", value: name)],
             responseType: [CharacterModel].self,
         )
         
-        return characters
+        return response
         
     }
     
-    func getDeath(of name: String) async throws -> DeathModel {
+    func getDeath() async throws -> ([DeathModel],HTTPURLResponse) {
         
-        let death = try await NetworkHelper.request(
-            url: Api.characters,
+        let response = try await NetworkHelper.request(
+            url: Api.deaths,
             method: .get,
-            queryParams: [URLQueryItem(name: "name", value: name)],
-            responseType: DeathModel.self,
+            responseType: [DeathModel].self,
         )
         
-        return death
+        return response
         
     }
 }

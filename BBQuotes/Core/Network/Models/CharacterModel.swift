@@ -20,15 +20,33 @@ struct CharacterModel: Decodable {
     let portrayedBy: String?
     var death: DeathModel?
     
+    
+    enum CodingKeys: CodingKey {
+        case name
+        case birthday
+        case occupation
+        case images
+        case aliases
+        case status
+        case portrayedBy
+        case death
+    }
+    
     init(from decoder: Decoder) throws {
-        let json = try decoder.container(keyedBy: DynamicCodingKey.self)
-        name = json.safeStringDecode(forKey: "name")
-        birthday = json.safeStringDecode(forKey: "birthday")
-        occupations = json.safeListDecode(forKey: "occupation")
-        images = json.safeListDecode(forKey: "images")
-        aliases = json.safeListDecode(forKey: "aliases")
-        portrayedBy = json.safeStringDecode(forKey: "portrayed_by")
-        status = json.safeObjectDecode(forKey: "status")
+        let json = try decoder.container(keyedBy: CodingKeys.self)
+        name = json.safeStringDecode(forKey: .name)
+        birthday = json.safeStringDecode(forKey: .birthday)
+        occupations = json.safeListDecode(forKey: .occupation)
+        images = json.safeListDecode(forKey: .images)
+        aliases = json.safeListDecode(forKey: .aliases)
+        portrayedBy = json.safeStringDecode(forKey: .portrayedBy)
+        status = json.safeObjectDecode(forKey: .status)
+    }
+    
+    func copyWithDeath(death: DeathModel?) -> CharacterModel {
+        var copy = self
+        copy.death = death
+        return copy
     }
 }
 

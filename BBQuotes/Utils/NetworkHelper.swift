@@ -69,7 +69,7 @@ struct NetworkHelper {
         queryParams: [URLQueryItem]? = nil,
         headers: [String: String]? = nil,
         responseType: T.Type
-    ) async throws -> T {
+    ) async throws -> (T, HTTPURLResponse) {
         var finalURL = url
         if let queryItems = queryParams {
             finalURL = finalURL.appending(queryItems: queryItems)
@@ -91,7 +91,9 @@ struct NetworkHelper {
             throw URLError(.badServerResponse)
         }
         
-        return try JSONDecoder().decode(T.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try (decoder.decode(T.self, from: data), httpResponse)
     }
     
     // Request with an Encodable body
@@ -102,7 +104,7 @@ struct NetworkHelper {
         body: B,
         headers: [String: String]? = nil,
         responseType: T.Type
-    ) async throws -> T {
+    ) async throws -> (T, HTTPURLResponse) {
         var finalURL = url
         if let queryItems = queryItems {
             finalURL = finalURL.appending(queryItems: queryItems)
@@ -126,6 +128,8 @@ struct NetworkHelper {
             throw URLError(.badServerResponse)
         }
         
-        return try JSONDecoder().decode(T.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return try (decoder.decode(T.self, from: data), httpResponse)
     }
 }

@@ -12,11 +12,15 @@ struct QuoteModel: Decodable {
     let character: String?
     
  
+    enum CodingKeys: CodingKey {
+        case quote
+        case character
+    }
     
     init(from decoder: Decoder) throws {
-        let json = try decoder.container(keyedBy: DynamicCodingKey.self)
-        quote = json.safeStringDecode(forKey: "quote")
-        character = json.safeStringDecode(forKey: "character")
+        let json = try decoder.container(keyedBy: CodingKeys.self)
+        quote = json.safeStringDecode(forKey: .quote)
+        character = json.safeStringDecode(forKey: .character)
     }
 
     
