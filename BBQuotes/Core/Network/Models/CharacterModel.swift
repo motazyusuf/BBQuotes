@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct CharacterModel: Decodable {
+struct CharacterModel: Decodable, Equatable {
     let name: String?
     let birthday: String?
     let occupations: [String]?
@@ -43,10 +43,34 @@ struct CharacterModel: Decodable {
         status = json.safeObjectDecode(forKey: .status)
     }
     
+    init(
+        name: String? = nil,
+        birthday: String? = nil,
+        occupations: [String]? = nil,
+        images: [URL]? = nil,
+        aliases: [String]? = nil,
+        status: Status? = nil,
+        portrayedBy: String? = nil,
+        death: DeathModel? = nil
+    )
+    {
+        self.name = name
+        self.birthday = birthday
+        self.occupations = occupations
+        self.images = images
+        self.aliases = aliases
+        self.status = status
+        self.portrayedBy = portrayedBy
+        self.death = death
+    }
+
+    
     func copyWithDeath(death: DeathModel?) -> CharacterModel {
         var copy = self
         copy.death = death
         return copy
     }
+    
+    
 }
 

@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct BBQuotesApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            RandomQuotesView(
+                store: Store(
+                    initialState: RandomQuotesFeature.State()
+                ) {
+                    RandomQuotesFeature()
+                }
+            )
         }
     }
 }

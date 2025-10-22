@@ -1,15 +1,7 @@
-//
-//  QuotesRepo.swift
-//  BBQuotes
-//
-//  Created by Moataz on 19/10/2025.
-//
-
+import ComposableArchitecture
 import Foundation
 
-struct BBRepo {
-    
-    
+struct RandomQuotesRepo {
     func getRandomQuote(from show: String) async throws -> (QuoteModel,HTTPURLResponse) {
         
         let response = try await NetworkHelper.request(
@@ -20,7 +12,7 @@ struct BBRepo {
         )
         
         return response
-
+        
     }
     
     func getCharacter(_ name: String) async throws -> ([CharacterModel],HTTPURLResponse) {
@@ -47,4 +39,15 @@ struct BBRepo {
         return response
         
     }
+}
+
+extension DependencyValues {
+    var randomQuotesRepo: RandomQuotesRepo {
+        get { self[RandomQuotesRepoKey.self] }
+        set { self[RandomQuotesRepoKey.self] = newValue }
+    }
+}
+
+private enum RandomQuotesRepoKey: DependencyKey {
+    static let liveValue = RandomQuotesRepo()
 }

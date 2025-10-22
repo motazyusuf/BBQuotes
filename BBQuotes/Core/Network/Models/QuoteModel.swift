@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct QuoteModel: Decodable {
+struct QuoteModel: Decodable, Equatable {
     let quote: String?
     let character: String?
     

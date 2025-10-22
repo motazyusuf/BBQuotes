@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DeathModel: Decodable {
+struct DeathModel: Decodable, Equatable {
     let character: String?
     let image: URL?
     let details: String?
