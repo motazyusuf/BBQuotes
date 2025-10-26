@@ -10,8 +10,7 @@ import SwiftUI
 struct QuoteTabView: View {
     let store: StoreOf<RandomQuotesFeature>
     let backgroundImage: Image
-    let isBreakingBad: Bool
-    let production: String
+    let production: ProductionType
     let geo: CGSize
     @State var isSheetShown = false
 
@@ -81,12 +80,12 @@ struct QuoteTabView: View {
 
                     Button {
                         viewStore.send(
-                            .getData(production)
+                            .getData(production.rawValue)
                         )
                     }
                     label: {
                         Text("Get Random Quote")
-                            .quoteButtonModifier(isBreakingBad: isBreakingBad)
+                            .quoteButtonModifier(production: production)
                     }
                         
                     Spacer(minLength: 100)
@@ -101,7 +100,7 @@ struct QuoteTabView: View {
             
             .preferredColorScheme(.dark)
             .sheet(isPresented: $isSheetShown) {
-                CharacterView(character: store.character, isBreakingBad: isBreakingBad)
+                CharacterView(character: store.character, production: production)
             }
         }
     }
@@ -112,5 +111,5 @@ struct QuoteTabView: View {
         initialState: RandomQuotesFeature.State()
     ) {
         RandomQuotesFeature()
-    }, backgroundImage: Image(.breakingbad), isBreakingBad: true, production: "Breaking Bad", geo: CGSize(width: 393, height: 852))
+    }, backgroundImage: Image(.breakingbad), production: .breakingBad, geo: CGSize(width: 393, height: 852))
 }

@@ -10,7 +10,7 @@ struct RandomQuotesFeature {
             switch action {
             case .onAppear:
                 state.isLoading = true
-                return .send(.getData(ProductionEnum.breakingBad.rawValue))
+                return .send(.getData(ProductionType.breakingBad.rawValue))
                 
             case let .getData(production):
                 state.isLoading = true

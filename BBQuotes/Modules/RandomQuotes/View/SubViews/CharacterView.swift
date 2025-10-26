@@ -10,12 +10,12 @@ import SwiftUI
 
 struct CharacterView: View {
     let character: CharacterModel?
-    let isBreakingBad: Bool?
+    let production: ProductionType?
 
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
-                Image((isBreakingBad ?? false) ? .breakingbad : .bettercallsaul)
+                production?.backgroundImage
                     .resizable()
                     .scaledToFit()
                 
@@ -65,6 +65,6 @@ struct CharacterView: View {
             name: "Walter White",
             images: [URL(string: "https://images.amcnetworks.com/amc.com/wp-content/uploads/2015/04/cast_bb_700x1000_walter-white-lg.jpg")!],
             portrayedBy: "Bryan Cranston"
-        ), isBreakingBad: true
+        ), production: .breakingBad
     )
 }

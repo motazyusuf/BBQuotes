@@ -9,25 +9,25 @@
 import SwiftUI
 
 struct QuoteButtonModifier: ViewModifier {
-    let isBreakingBad: Bool
+    let production: ProductionType
     
     func body(content: Content) -> some View {
         content   .font(.title)
             .foregroundStyle(.white)
             .padding()
-            .background(isBreakingBad ? .breakingBadGreen : .betterCallSaulBlue)
+            .background(production.buttonColor)
             .clipShape(.rect(cornerRadius: 7))
-            .shadow(color: isBreakingBad ? .breakingBadYellow : .betterCallSaulBrown, radius: 2)
-    } 
+            .shadow(color: production.shadowColor, radius: 2)
+    }
 }
 
 extension View {
     func quoteButtonModifier(
-        isBreakingBad: Bool
+        production: ProductionType
 
     ) -> some View {
         modifier(QuoteButtonModifier(
-            isBreakingBad: isBreakingBad
+            production: production
         ))
     }
 }
