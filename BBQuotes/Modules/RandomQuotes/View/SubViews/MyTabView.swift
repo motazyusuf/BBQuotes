@@ -41,7 +41,7 @@ struct QuoteTabView: View {
                                 .frame(maxWidth: .infinity)
  
                             ZStack(alignment: .bottom) {
-                                AsyncImage(url: character.images?.last) { image in
+                                AsyncImage(url: character.images?.first) { image in
                                     image
                                         .resizable()
                                         .scaledToFill()

@@ -18,42 +18,49 @@ struct CharacterView: View {
                 production?.backgroundImage
                     .resizable()
                     .scaledToFit()
-                
+
                 ScrollView {
-                    AsyncImage(url: character?.images?.last) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
+                    TabView {
+                        ForEach(character?.images ?? [], id: \.self) { imageUrl in
+                            AsyncImage(url: imageUrl) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                            placeholder: {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 0)
+                                        .fill(.gray.opacity(0.3))
+                                    
+                                    ProgressView()
+                                }
+                              
+                            }
+                           
+                        }
                     }
-                    placeholder: {
-                        RoundedRectangle(cornerRadius: 50)
-                            .fill(.gray.opacity(0.3))
-                    }
+                    .tabViewStyle(.page)
                     .frame(
                         width: geo.size.width * 0.9,
                         height: geo.size.height * 0.6
                     )
                     .clipShape(.rect(cornerRadius: 50))
                     .padding(.top, 60)
-                    
+
                     VStack(alignment: .leading) {
                         Text("\(character?.name ?? "")")
                             .padding(.top)
                             .font(.largeTitle)
-                        
+
                         Text("Portrayed By: \(character?.portrayedBy ?? "")")
                             .font(.subheadline)
-                        
+
                         Divider()
-                        
-                        
-                        
-                        
                     }
                     .frame(width: geo.size.width * 0.8, alignment: .leading)
-                 }
+                }
             }
-             }
+        }
         .ignoresSafeArea()
         .preferredColorScheme(.dark)
     }
